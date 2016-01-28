@@ -1,69 +1,91 @@
 class Player {
-  float vSpeed, hSpeed, posX, posY;
+  PVector pos, speed;
+  float health;
+
   Player() {
-    posX=width/2;
-    posY=height/2;
-    vSpeed=0;
-    hSpeed=0;
+    pos=new PVector();
+    speed = new PVector();
+    pos.x=width/2;
+    pos.y=height/2;
   }
-  Player(float x, float y){
-   posX=x;
-   posY=y;
-   hSpeed=0;
-   vSpeed=0;
+  Player(float x, float y) {
+    pos=new PVector();
+    speed=new PVector();
+    pos.x=x;
+    pos.y=y;
   }
+
   void draw() {
-    ellipse (posX, posY, 30, 30);
-    posX+=hSpeed;
-    posY+=vSpeed;
-    hSpeed*=0.95;
-    vSpeed*=0.95;
+    stroke(255,0,0);
+    noFill();
+    ellipse(mouseX,mouseY,25,25);
+    line(mouseX-12.5,mouseY,mouseX+12.5,mouseY);
+    line(mouseX,mouseY-12.5,mouseX,mouseY+12.5);
+    line(pos.x, pos.y, mouseX, mouseY);
+    fill(255);
+    stroke(0);
+    ellipse (pos.x, pos.y, 30, 30);
   }
-  void moveUp() {
-    if (vSpeed>=-2.5)
+
+  void update() {
+    pos.add(speed);
+    speed.x*=0.95;
+    speed.y*=0.95;
+    move();
+  }
+
+  void move() {
+
+    if (move[0])
     {
-      vSpeed-=0.5;
-    } else
-    {
-      if (vSpeed>-3)
+      if (speed.x>=-2.5)
       {
-        vSpeed=-3;
+        speed.x-=0.5;
+      } else
+      {
+        if (speed.x>-3)
+        {
+          speed.x=-3;
+        }
       }
     }
-  }
-  void moveDown() {
-    if (vSpeed<=2.5)
-    {
-      vSpeed+=0.5;
-    } else
-    {
-      if (vSpeed<3)
+
+    if (move[1]) {
+      if (speed.y<=2.5)
       {
-        vSpeed=3;
+        speed.y+=0.5;
+      } else
+      {
+        if (speed.y<3)
+        {
+          speed.y=3;
+        }
       }
     }
-  }
-  void moveLeft() {
-    if (hSpeed>=-2.5)
-    {
-      hSpeed-=0.5;
-    } else
-    {
-      if (vSpeed>-3)
+
+    if (move[2]) {
+      if (speed.x<=2.5)
       {
-        hSpeed=-3;
+        speed.x+=0.5;
+      } else
+      {
+        if (speed.x<3)
+        {
+          speed.x=3;
+        }
       }
     }
-  }
-  void moveRight() {
-    if (hSpeed<=2.5)
-    {
-      hSpeed+=0.5;
-    } else
-    {
-      if (hSpeed<3)
+
+    if (move[3]) {
+      if (speed.y>=-2.5)
       {
-        hSpeed=3;
+        speed.y-=0.5;
+      } else
+      {
+        if (speed.y>-3)
+        {
+          speed.y=-3;
+        }
       }
     }
   }
